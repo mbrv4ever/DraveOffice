@@ -1,0 +1,61 @@
+DraveOffice - EXE met eigen icoon (Dravenlock)
+==============================================
+
+In deze map zitten de bestanden om DraveOffice tot een echte EXE met het
+drakenicoon te bouwen, net als bij DraveKas:
+
+  assets\logo.png        - het schone logo (transparant)
+  assets\logo.ico        - het icoon voor de EXE en de taakbalk
+  DraveOffice.spec       - bouwinstructies (gaat uit van app.py)
+  Maak DraveOffice EXE.bat - bouwt dist\DraveOffice.exe
+
+
+WAT JE MOET DOEN
+----------------
+1. Kopieer de map  assets  (logo.png + logo.ico) naar je DraveOffice-map,
+   zodat de logo's klaarstaan.
+2. Zet  DraveOffice.spec  en  Maak DraveOffice EXE.bat  in je DraveOffice-map
+   (naast app.py).
+3. Voer hieronder de twee kleine codeaanpassingen in app.py door.
+4. Dubbelklik op  Maak DraveOffice EXE.bat
+
+
+TWEE KLEINE AANPASSINGEN IN app.py
+----------------------------------
+
+A) Assets ook vinden NA het inpakken (PyInstaller onefile).
+   Zoek bovenaan waar het assets-pad wordt bepaald (iets als
+   HIER = os.path.dirname(...) en ASSETS = os.path.join(HIER, "assets")).
+   Vervang dat door:
+
+       def _basis_map():
+           if getattr(sys, "frozen", False):
+               return getattr(sys, "_MEIPASS",
+                              os.path.dirname(os.path.abspath(sys.executable)))
+           return os.path.dirname(os.path.abspath(__file__))
+
+       HIER = _basis_map()
+       ASSETS = os.path.join(HIER, "assets")
+
+   (Zorg dat  import sys  en  import os  bovenaan staan.)
+
+
+B) Taakbalk-icoon op Windows (anders toont de taakbalk Python).
+   Zet dit als eerste regels in je main()-functie, voordat de QApplication
+   wordt gemaakt:
+
+       if sys.platform.startswith("win"):
+           try:
+               import ctypes
+               ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(
+                   "Dravenlock.DraveOffice")
+           except Exception:
+               pass
+
+
+Let op: de gedeelde module kasboek.py is in DraveKas al aangepast (punt A
+zit er al in). Gebruik die nieuwe kasboek.py ook in DraveOffice, dan klopt
+het overal.
+
+Bouwt niet? Lees de meldingen in het zwarte venster - meestal is het een
+ontbrekend bestand of een verkeerde mapnaam.
