@@ -2,6 +2,12 @@
 
 Lokale, offline office-suite: tekstverwerker, rekenblad, rekenmachine, kasboek, presentatie, tekenen en database.
 
+## ðŸŽ¬ Uitlegvideo
+
+[![Uitlegvideo DraveOffice](https://dravenlock.nl/video/DraveOffice.jpg)](https://dravenlock.nl/video/DraveOffice.mp4)
+
+[â–¶ Bekijk de uitlegvideo](https://dravenlock.nl/video/DraveOffice.mp4) (ongeveer 2 minuten, Nederlands)
+
 *Categorie: Tools en kantoor · versie 0.5.2*
 
 ## ⬇️ Downloaden (Windows, geen Python nodig)
